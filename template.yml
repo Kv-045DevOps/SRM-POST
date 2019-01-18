@@ -1,0 +1,43 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: production
+  name: post-service
+  labels:
+    app: post
+spec:
+  selector:
+    app: post
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5001
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: production
+  name: post-deployment
+spec:
+  selector:
+    matchLabels:
+      app: post
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: post
+    spec:
+      containers:
+      - name: post
+        image: 100.71.71.71:5000/post-service:2.1
+        ports:
+        - containerPort: 5001
+        env:
+        - name: DB_URL
+          valueFrom:
+            configMapKeyRef:
+              name: services-address
+              key: DB_URL
