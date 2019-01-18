@@ -11,8 +11,8 @@ def app
 //def Creds = "git_cred"
 def projName = "post-python"
 def imageVersion = "v1"
-def imageName = "100.71.71.71:5000/post-python:${imageVersion}"
-def imageN = '100.71.71.71:5000/post-python:'
+def imageName = "100.71.71.71:5000/post-service:${imageVersion}"
+def imageN = '100.71.71.71:5000/post-service:'
 
 
 node(label)
@@ -43,10 +43,10 @@ node(label)
 //            app = docker.build("${imageName}:${imageTag}")
 				sh "docker build ${pathdocker} -t ${imageName}"
 				sh "docker images"
-	//withCredentials([usernamePassword(credentialsId: 'docker_registry', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
+	withCredentials([usernamePassword(credentialsId: 'docker_registry', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
 				sh "docker login -u ${env.dockerUser} -p ${env.dockerPassword}"
 				sh "docker push ${imageName}"
-        //}
+        }
 			}
         }
         stage("Check push image to Docker Registry"){
