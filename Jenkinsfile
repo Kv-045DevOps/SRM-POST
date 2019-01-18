@@ -7,7 +7,7 @@ podTemplate(label: label, containers: [
 ]) 
 {
 def app
-//def dockerRegistry = "100.71.71.71:5000"
+def dockerRegistry = "100.71.71.71:5000"
 //def Creds = "git_cred"
 def projName = "post-python"
 def imageVersion = "v1"
@@ -16,7 +16,7 @@ def imageN = '100.71.71.71:5000/post-service:'
 
 
 node(label)
-{
+{\
     try{
         stage("Git Checkout"){
             git(
@@ -33,9 +33,9 @@ node(label)
             sh 'echo "Here will be unit tests"'
         }
         stage("Test code using PyLint and change version"){
-	    sh "python3 ${pathTocode}/sed-python.py"
+	    sh "python3 ${pathTocode}/sed-python.py template.yml ${dockerRegistry}/post-service ${imageTag}"
             pathTocode = pwd()
-            sh "python3 ${pathTocode}/pylint-test.py ${pathTocode}/app/app.py"
+            sh "python3 ${pathTocode}/pylint-test.py ${pathTocode}/app/routes.py"
         }
         stage("Build docker image"){
 			container('docker'){
@@ -43,10 +43,10 @@ node(label)
 //            app = docker.build("${imageName}:${imageTag}")
 				sh "docker build ${pathdocker} -t ${imageName}"
 				sh "docker images"
-	withCredentials([usernamePassword(credentialsId: 'docker_registry', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
+//	withCredentials([usernamePassword(credentialsId: 'docker_registry', passwordVariable: 'dockerPassword', usernameVariable: 'dockerUser')]) {
 				sh "docker login -u ${env.dockerUser} -p ${env.dockerPassword}"
 				sh "docker push ${imageName}"
-        }
+//        }
 			}
         }
         stage("Check push image to Docker Registry"){
@@ -55,7 +55,7 @@ node(label)
         }
         stage("Deploy to Kubernetes"){
 			container('kubectl'){
-				sh "kubectl apply -f template.yaml"
+				sh "kubectl apply -f template.yml"
 				sh "kubectl get pods --namespace=stark-cluster"
 			}
         }
