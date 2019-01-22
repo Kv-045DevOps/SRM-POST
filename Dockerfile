@@ -1,7 +1,6 @@
 FROM python:3.6-alpine
-MAINTAINER Viacheslav Kryvous
-COPY . /app
-WORKDIR /app
+MAINTAINER Maxim Zhovanik
+WORKDIR /service/GET-POST
+COPY . /service/GET-POST
 RUN pip install -r requirements.txt
-ENTRYPOINT ["python"]
-CMD ["postservice.py"]
+CMD ["python", "/service/GET-POST/app/app.py"]
