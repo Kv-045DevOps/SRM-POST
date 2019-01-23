@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify, request
 import flask
 import json
 import requests
@@ -40,7 +40,7 @@ def posting():
         else:
             return False
 
-    datajson = requests.data
+    datajson = request.data
     data = json.loads(datajson)
     msg = "Successfully sent"
 
