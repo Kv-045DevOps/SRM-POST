@@ -40,7 +40,7 @@ def posting():
         else:
             return False
 
-    datajson = request.data
+    datajson = requests.data
     data = json.loads(datajson)
     msg = "Successfully sent"
 
