@@ -24,7 +24,7 @@ node(label)
     try{
         stage("Git Checkout"){
             git(
-                branch: "post",
+                branch: "test",
                 url: 'https://github.com/Kv-045DevOps/SRM-POST.git',
                 credentialsId: "${Creds}")
             //sh "git rev-parse --short HEAD > .git/commit-id"
