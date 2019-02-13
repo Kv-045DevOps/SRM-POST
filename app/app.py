@@ -1,9 +1,11 @@
-from app import app
-import flask
 from flask import Flask, jsonify, request
 from requests import post
+import flask
 import json
+import requests
 import os
+
+app = Flask(__name__)
 
 link = str(os.getenv("DB_URL"))
 
@@ -77,3 +79,6 @@ def posting():
             pass
 
     return jsonify(msg)
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port="5001")

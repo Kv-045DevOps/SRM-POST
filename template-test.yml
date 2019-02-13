@@ -2,7 +2,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  namespace: production
+  namespace: testing
   name: post-service
   labels:
     app: post
@@ -18,7 +18,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  namespace: production
+  namespace: testing
   name: post-deployment
 spec:
   selector:
