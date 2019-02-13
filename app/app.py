@@ -1,4 +1,3 @@
-from app import app
 import flask
 from flask import Flask, jsonify, request
 from requests import post
