@@ -50,7 +50,7 @@ node(label)
         }
         stage("Test code using PyLint and version build"){
 			container('python-alpine'){
-				sh "python3 /pylint-test.py ${pathTocodepost}/app/app.py"
+				// sh "python3 /pylint-test.py ${pathTocodepost}/app/app.py"
 			}
         }
         stage("Build docker image"){
