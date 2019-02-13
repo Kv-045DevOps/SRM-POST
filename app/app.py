@@ -5,6 +5,8 @@ from requests import post
 import json
 import os
 
+app = Flask(__name__)
+
 link = str(os.getenv("DB_URL"))
 
 @app.route('/posting', methods=['POST'])
@@ -77,3 +79,7 @@ def posting():
             pass
 
     return jsonify(msg)
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", port="5001")
+
